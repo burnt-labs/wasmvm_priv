@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   format:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v6
 
