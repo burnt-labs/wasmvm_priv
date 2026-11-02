@@ -11,7 +11,7 @@ on:
 jobs:
   check-typos:
     name: "Spell-check repository source"
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6

@@ -12,7 +12,7 @@ on:
 
 jobs:
   libwasmvm_sanity:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
@@ -68,7 +68,7 @@ jobs:
           cargo test --doc
 
   libwasmvm_clippy:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     strategy:
       matrix:
         rust-version: ["1.82.0", "1.87.0"]
@@ -99,7 +99,7 @@ jobs:
         run: cargo clippy --all-targets -- -D warnings
 
   libwasmvm_audit:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
@@ -128,7 +128,7 @@ jobs:
         run: cargo audit --ignore RUSTSEC-2026-0007 --ignore RUSTSEC-2026-0001 --ignore RUSTSEC-2026-0009 --ignore RUSTSEC-2026-0104 --ignore RUSTSEC-2026-0049 --ignore RUSTSEC-2026-0098 --ignore RUSTSEC-2026-0099 --ignore RUSTSEC-2026-0068 --ignore RUSTSEC-2026-0067
 
   format-go:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
@@ -147,7 +147,7 @@ jobs:
           [ "$(gofumpt -l .)" = "" ] || (gofumpt -d . && exit 1)
 
   wasmvm_no_cgo:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
@@ -167,7 +167,7 @@ jobs:
         run: CGO_ENABLED=0 go test .
 
   nolink_libwasmvm:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
@@ -187,7 +187,7 @@ jobs:
         run: go test -tags "nolink_libwasmvm" .
 
   tidy-go:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v6
 
@@ -207,7 +207,7 @@ jobs:
           fi
 
   lint-scripts:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v6
 
@@ -221,7 +221,7 @@ jobs:
           find . -name "*.sh" -exec shellcheck {} +
 
   build_shared_library:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     steps:
       - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
@@ -249,7 +249,7 @@ jobs:
           path: internal/api/libwasmvm.x86_64.so
 
   wasmvm_test:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     needs: build_shared_library
     env:
       GORACE: "halt_on_error=1"
@@ -284,7 +284,7 @@ jobs:
         run: make bench
 
   build_static_lib:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     needs: build_shared_library
     if: (github.ref_type == 'branch' && github.ref_name == 'main') || github.ref_type == 'tag'
     steps:
@@ -350,7 +350,7 @@ jobs:
             "$TAG" ./artifacts/
 
   test_alpine_build:
-    runs-on:  ubuntu-latest
+    runs-on:  ubicloud-standard-4
     if: github.ref_type == 'branch' && github.ref_name == 'main'
     steps:
       - uses: actions/checkout@v6
@@ -362,7 +362,7 @@ jobs:
         run: ls -l ./internal/api
 
   deploy_to_git:
-    runs-on: ubuntu-latest
+    runs-on: ubicloud-standard-4
     needs:
       - libwasmvm_sanity
       - format-go
